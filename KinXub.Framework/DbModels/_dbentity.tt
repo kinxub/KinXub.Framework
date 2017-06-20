@@ -1,0 +1,60 @@
+﻿<#
+  //1. Ctrl + S save file
+  //2. Click OK
+#>
+<#@ template language="C#" debug="True" hostspecific="True" #>
+<#@ include file="_Manager.ttinclude"#>
+<#@ assembly name="System.Data" #>
+<#@ assembly name="System.xml" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Data.SqlClient" #>
+<#@ import namespace="System.Data" #>
+
+<# var manager = Manager.Create(Host, GenerationEnvironment); #>
+<#
+	//edit connection string
+	//string connectionString = "server=GSMCITDEV0580;uid=sa;pwd=1qaz@WSX3edc;database=DoNetSample"; 
+	SqlConnection conn = new SqlConnection(connectionString); 
+	conn.Open(); 
+			
+	//database all table，use "conn.GetSchema("Tables")"
+	string[] restrictions = new string[4];
+	restrictions[1] = "dbo";
+	//edit table name
+	//restrictions[2] = "table name";
+	//DataTable schema = conn.GetSchema("Tables", restrictions);
+	DataTable schema = conn.GetSchema("Tables");
+			
+	string selectQuery = "select * from  @tableName"; 
+	SqlCommand command = new SqlCommand(selectQuery,conn); 
+	SqlDataAdapter ad = new SqlDataAdapter(command); 
+	System.Data.DataSet ds = new DataSet(); 
+			
+	foreach(System.Data.DataRow row in schema.Rows) 
+	{
+#> 
+<# manager.StartNewFile(row["TABLE_NAME"].ToString().Trim('s') + ".cs"); #>
+using System;
+<# //todo: edit your namespace #>
+namespace KinXub.Models 
+{
+	public class <#= row["TABLE_NAME"].ToString().Trim('s') #>                            
+	{
+		<#                 
+			command.CommandText = selectQuery.Replace("@tableName",row["TABLE_NAME"].ToString()); 
+			ad.FillSchema(ds, SchemaType.Mapped, row["TABLE_NAME"].ToString());
+
+			foreach (DataColumn dc in ds.Tables[row["TABLE_NAME"].ToString()].Columns)
+			{
+		#>                      
+		public <#= manager.getDataType(dc.DataType.Name) #> <#= dc.ColumnName #> { get; set; }                                        	
+		<#
+			}
+		#>                                
+	}
+}
+<# manager.EndBlock(); #>
+<#
+	}  
+#>
+<# manager.Process(true); #>

@@ -1,0 +1,10 @@
+d:\temp\DoNet.Sample\KinXub.Framework\bin\Debug\KinXub.Framework.dll
+d:\temp\DoNet.Sample\KinXub.Framework\bin\Debug\KinXub.Framework.pdb
+d:\temp\DoNet.Sample\KinXub.Framework\bin\Debug\Dapper.dll
+d:\temp\DoNet.Sample\KinXub.Framework\bin\Debug\itextsharp.dll
+d:\temp\DoNet.Sample\KinXub.Framework\bin\Debug\itextsharp.xmlworker.dll
+d:\temp\DoNet.Sample\KinXub.Framework\bin\Debug\Dapper.xml
+d:\temp\DoNet.Sample\KinXub.Framework\bin\Debug\itextsharp.xml
+d:\temp\DoNet.Sample\KinXub.Framework\obj\Debug\KinXub.Framework.csprojResolveAssemblyReference.cache
+d:\temp\DoNet.Sample\KinXub.Framework\obj\Debug\KinXub.Framework.dll
+d:\temp\DoNet.Sample\KinXub.Framework\obj\Debug\KinXub.Framework.pdb
